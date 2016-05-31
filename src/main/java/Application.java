@@ -36,6 +36,7 @@ public class Application {
 
         // Update the contact
         c.setFirstName("Martin");
+        c.setLastName("Fowler");
 
         // Persist the changes
         System.out.printf("%nUpdating...%n");
@@ -45,6 +46,30 @@ public class Application {
         // Display a list of contacts after the update
         System.out.printf("%nAfter update%n");
         fetchAllContacts().stream().forEach(System.out::println);
+
+        // Deleting contact
+        deleteContact(c);
+
+        // Display a list of contacts after deleting
+        System.out.printf("%nAfter delete%n");
+        fetchAllContacts().stream().forEach(System.out::println);
+    }
+
+    private static void deleteContact(Contact contact) {
+        // Open a session
+        Session session = sessionFactory.openSession();
+
+        // Begin a transaction
+        session.beginTransaction();
+
+        // Deleting the contact
+        session.delete(contact);
+
+        // Commit the transaction
+        session.getTransaction().commit();
+
+        // Close the session
+        session.close();
     }
 
     private static Contact findContactById(int id) {

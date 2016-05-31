@@ -5,7 +5,9 @@ import javax.persistence.*;
 @Entity
 public class Contact {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "generatorName")
+    @TableGenerator(name = "generatorName", allocationSize = 1)
     private int id;
 
     @Column

@@ -28,14 +28,23 @@ public class Application {
         int id = save(contact);
 
         // Display a list of contacts before the update
+        System.out.printf("%nBefore update%n");
         fetchAllContacts().stream().forEach(System.out::println);
 
         // Get the persisted contact
+        Contact c = findContactById(id);
 
         // Update the contact
+        c.setFirstName("Martin");
 
         // Persist the changes
+        System.out.printf("%nUpdating...%n");
+        update(c);
+        System.out.printf("%nUpdate complete%n");
 
+        // Display a list of contacts after the update
+        System.out.printf("%nAfter update%n");
+        fetchAllContacts().stream().forEach(System.out::println);
     }
 
     private static Contact findContactById(int id) {

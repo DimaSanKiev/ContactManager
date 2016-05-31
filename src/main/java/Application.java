@@ -30,6 +30,20 @@ public class Application {
         fetchAllContacts().stream().forEach(System.out::println);
     }
 
+    private static Contact findContactById(int id) {
+        // Open a session
+        Session session = sessionFactory.openSession();
+
+        // Retrieve the persistent object(or null if not found)
+        Contact contact = session.get(Contact.class, id);
+
+        // Close the session
+        session.close();
+
+        // Return the object
+        return contact;
+    }
+
     @SuppressWarnings("unchecked")
     private static List<Contact> fetchAllContacts() {
         // Open a session

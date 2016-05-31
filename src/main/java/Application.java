@@ -1,3 +1,5 @@
+import model.Contact;
+import model.Contact.ContactBuilder;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -14,6 +16,10 @@ public class Application {
     }
 
     public static void main(String[] args) {
-
+        Contact contact = new ContactBuilder("James", "Gosling")
+                .withEmail("james@java.com")
+                .withPhone(7735556666L)
+                .build();
+        System.out.println(contact);
     }
 }

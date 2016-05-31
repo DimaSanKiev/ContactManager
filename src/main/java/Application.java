@@ -1,5 +1,6 @@
 import model.Contact;
 import model.Contact.ContactBuilder;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -20,6 +21,20 @@ public class Application {
                 .withEmail("james@java.com")
                 .withPhone(7735556666L)
                 .build();
-        System.out.println(contact);
+
+        // Open a session
+        Session session = sessionFactory.openSession();
+
+        // Begin a transaction
+        session.beginTransaction();
+
+        // Use the session to save the contact
+        session.save(contact);
+
+        // Commit the transaction
+        session.getTransaction().commit();
+
+        // Close the session
+        session.close();
     }
 }

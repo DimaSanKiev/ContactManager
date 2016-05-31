@@ -20,14 +20,22 @@ public class Application {
     }
 
     public static void main(String[] args) {
+        // Create and persist a new contact object
         Contact contact = new ContactBuilder("James", "Gosling")
                 .withEmail("james@java.com")
                 .withPhone(7735556666L)
                 .build();
-        save(contact);
+        int id = save(contact);
 
-        // Display a list of contacts
+        // Display a list of contacts before the update
         fetchAllContacts().stream().forEach(System.out::println);
+
+        // Get the persisted contact
+
+        // Update the contact
+
+        // Persist the changes
+
     }
 
     private static Contact findContactById(int id) {
@@ -42,6 +50,23 @@ public class Application {
 
         // Return the object
         return contact;
+    }
+
+    private static void update(Contact contact) {
+        // Open a session
+        Session session = sessionFactory.openSession();
+
+        // Begin a transaction
+        session.beginTransaction();
+
+        // Use the session to update the contact
+        session.update(contact);
+
+        // Commit the transaction
+        session.getTransaction().commit();
+
+        // Close the session
+        session.close();
     }
 
     @SuppressWarnings("unchecked")
@@ -61,7 +86,7 @@ public class Application {
         return contacts;
     }
 
-    private static void save(Contact contact) {
+    private static int save(Contact contact) {
         // Open a session
         Session session = sessionFactory.openSession();
 
@@ -69,12 +94,14 @@ public class Application {
         session.beginTransaction();
 
         // Use the session to save the contact
-        session.save(contact);
+        int id = (int) session.save(contact);
 
         // Commit the transaction
         session.getTransaction().commit();
 
         // Close the session
         session.close();
+
+        return id;
     }
 }
